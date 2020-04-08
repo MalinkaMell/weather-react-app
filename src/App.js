@@ -69,15 +69,15 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Body>
-          <SearchContainer handleChange={this.handleChange} handleSubmit={this.handleSubmit} input={this.state.input} />
           <Switch>
             <Route exact path="/">
+              <SearchContainer handleChange={this.handleChange} handleSubmit={this.handleSubmit} input={this.state.input} />
               {this.state.display !== null && <Results city={this.state.display} />}
             </Route>
             <Route path="/fivedays">
-              {this.state.display !== null && <FiveDaysResults city={this.state.display} />}
+              <FiveDaysResults city={this.state.display} />
             </Route>
           </Switch>
         </Body>
