@@ -3,9 +3,11 @@ import Button from '../button/Button';
 import { Link } from "react-router-dom";
 
 const Results = props => {
+  
 console.log(props);
 
   return (
+    Object.keys(props.city).length !== 0 ?
     <div className="px-2 text-center">
       <h3 className="my-3">{props.city.name}, {props.city.state}</h3>
       <ul className="list-inline d-flex">
@@ -28,7 +30,8 @@ console.log(props);
         }
       </ul>
       <Link to="/fivedays"><Button type="button" btnValue="5 Day Weather" class="btn btn-primary my-4" /></Link>
-    </div>
+    </div> :
+    <h5 className="my-4">Sorry, we don't have results for this city</h5>
   )
 }
 

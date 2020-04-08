@@ -24,6 +24,7 @@ class App extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
+
     //new object to contain extracted data 
     const displayData = {}
 
@@ -48,9 +49,9 @@ class App extends React.Component {
     const cityIndex = parseInt(findCityIndex.flat().toString())
 
     //saving state in diplay object
-    displayData.state = findState.flat().toString()
+    findState.flat().toString() !== "" && (displayData.state = findState.flat().toString())
 
-    //search data in saved state object and using cityIndex
+    //search data using saved state object and cityIndex and saving it
     Object.keys(state).filter(key => {
       if (key === displayData.state) {
         displayData.name = state[key].cities[cityIndex].name
