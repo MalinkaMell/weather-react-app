@@ -8,3 +8,7 @@ Basic weather reactjs app build using provided API.
 * [React Router](https://reacttraining.com/react-router/web/guides/quick-start)
 * [React Bootstrap](https://react-bootstrap.github.io/)
 * This project was deployed using [gh-pages](https://www.npmjs.com/package/gh-pages)
+
+---
+
+[Project demo](https://malinkamell.github.io/weather-react-app/)
