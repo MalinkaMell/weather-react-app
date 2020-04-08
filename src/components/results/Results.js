@@ -3,15 +3,16 @@ import Button from '../button/Button';
 import { Link } from "react-router-dom";
 
 const Results = props => {
+console.log(props);
 
   return (
     <div className="px-2 text-center">
-      <h3 className="my-3">{props.city.name}</h3>
+      <h3 className="my-3">{props.city.name}, {props.city.state}</h3>
       <ul className="list-inline d-flex">
         {
           props.city.forecast.map((item, i) => {
             const date = new Date(item.Date).toDateString();
-            const today = new Date().toDateString();
+            const today = new Date(props.city.currentdate).toDateString();
             if (date === today) {
               return (
                 <li className="list-inline-item flex-fill text-center results p-2" key={i}>

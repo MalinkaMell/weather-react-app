@@ -6,7 +6,7 @@ const FiveDaysResults = props => {
 
   return (
     <div className="px-2 text-center">
-      <h3 className="my-3">{props.city.name}</h3>
+      <h3 className="my-3">{props.city.name}, {props.city.state}</h3>
       <ul className="list-inline d-flex">
         {
           props.city.forecast.map((item, i) => {

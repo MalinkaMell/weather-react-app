@@ -13,41 +13,7 @@ class App extends React.Component {
     this.state = {
       display: null,
       input: "",
-      data: [{
-        "name": "Chicago",
-        "forecast": [{
-          "Date": "04/05/2020",
-          "Time": "2.59pm",
-          "temprature": 47,
-          "feels": 40
-        },
-        {
-          "Date": "04/06/2020",
-          "Time": "2.59pm",
-          "temprature": 57,
-          "feels": 55
-        },
-        {
-          "Date": "04/07/2020",
-          "Time": "2.59pm",
-          "temprature": 45,
-          "feels": 44
-        },
-        {
-          "Date": "04/08/2020",
-          "Time": "2.59pm",
-          "temprature": 61,
-          "feels": 50
-        },
-        {
-          "Date": "04/09/2020",
-          "Time": "2.59pm",
-          "temprature": 68,
-          "feels": 65
-        }
-        ]
-
-      }]
+      data: weatherData
     }
   }
 
@@ -58,21 +24,60 @@ class App extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.state.data.map(city => this.state.input.toLowerCase() === city.name.toLowerCase() && this.setState({ display: city }))
-    this.setState({ input: "" })
+    //new object to contain extracted data 
+    const displayData = {}
+
+    //shortening state for easier use
+    const state = this.state.data.States;
+
+    //find in what state is my searched city
+    const findState = Object.keys(state).map(key => {
+      const index = []
+      state[key].cities.map((city, i) => this.state.input.toLowerCase() === city.name.toLowerCase() && index.push(key));
+      return index
+    })
+
+    //find city index
+    const findCityIndex = Object.keys(state).map(key => {
+      const index = []
+      state[key].cities.map((city, i) => this.state.input.toLowerCase() === city.name.toLowerCase() && index.push(i));
+      return index
+    })
+
+    //flat 
+    const cityIndex = parseInt(findCityIndex.flat().toString())
+
+    //saving state in diplay object
+    displayData.state = findState.flat().toString()
+
+    //search data in saved state object and using cityIndex
+    Object.keys(state).filter(key => {
+      if (key === displayData.state) {
+        displayData.name = state[key].cities[cityIndex].name
+        displayData.state = key
+        displayData.currentdate = state[key].currentdate
+        displayData.time = state[key].time
+        displayData.forecast = state[key].cities[cityIndex].forecast
+      }
+      return false
+    })
+
+    console.log(displayData)
+    //set new state
+    this.setState({ input: "", display: displayData })
   }
 
   render() {
     return (
       <Router>
         <Body>
+          <SearchContainer handleChange={this.handleChange} handleSubmit={this.handleSubmit} input={this.state.input} />
           <Switch>
             <Route exact path="/">
-              <SearchContainer handleChange={this.handleChange} handleSubmit={this.handleSubmit} input={this.state.input} />
               {this.state.display !== null && <Results city={this.state.display} />}
             </Route>
             <Route path="/fivedays">
-              <FiveDaysResults city={this.state.display} />
+              {this.state.display !== null && <FiveDaysResults city={this.state.display} />}
             </Route>
           </Switch>
         </Body>
